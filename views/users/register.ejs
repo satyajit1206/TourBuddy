@@ -1,0 +1,67 @@
+<% layout('./layouts/boilerplate') -%>
+<body>
+  <div class="container shadow-lg p-4 mb-5 bg-body rounded" style="box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); margin-top: 80px;">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <h1>Register on TourBuddy</h1>
+        <form
+          action="/users/register"
+          method="POST"
+          novalidate
+          class="needs-validation"
+        >
+          <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">Please enter a valid username.</div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+  
+          <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">Please enter a valid password.</div>
+          </div>
+  
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success fw-bold" style="background-color: #183153; border: none;">
+              Register
+            </button>
+          </div>
+        </form>
+        <br />
+        <div class="text-center">
+          <p>Or sign up with Google:</p>
+          <a href="/auth/google" class="btn btn-danger">
+            <i class="fab fa-google"></i> Sign up with Google
+          </a>
+        </div>
+        <br />
+        <p>Already have an account? <a href="/users/login">Login here</a></p>
+      </div>
+    </div>
+  </div>
+  
+</body>

@@ -1,0 +1,205 @@
+<% layout('./layouts/boilerplate') -%>
+<link rel="stylesheet" href="/css/chat.css" />
+<body>
+  <div class="container" style="margin-top: 80px;">
+    <div class="col-sm-6 offset-sm-4 fw-bold">
+      <div
+        class="startingText text-body-secondary"
+        style="
+          font-size: 5vh;
+          background: -webkit-linear-gradient(
+            rgb(188, 12, 241),
+            rgb(212, 4, 4)
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        "
+      >
+        TourBuddy
+      </div>
+      <div class="startingText mx-1" style="font-size: 5vh">
+        <span class="z-3"><b>Community</b></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="discussion-list chat-body">
+          <!-- Chat section -->
+          <div class="chat-section mt-4 mb-1">
+            <ul id="messages" class="list-unstyled"></ul>
+            <form id="chat-form" class="d-flex border-none">
+              <input
+                id="message-input"
+                autocomplete="off"
+                class="form-control me-2 border-none"
+                placeholder="Type your message here..."
+              />
+              <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const username = "<%= user.username %>";
+    socket.emit("set username", username);
+
+    // Join the 'general' category on page load
+    socket.emit("join category", "general");
+
+    function scrollToBottom() {
+      const chatBody = document.querySelector(".chat-body");
+      if (chatBody) {
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+    }
+
+    // Scroll to the bottom on page load
+    window.onload = function () {
+      scrollToBottom();
+    };
+
+    // Handle form submission
+    document
+      .getElementById("chat-form")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+        const messageInput = document.getElementById("message-input");
+        const message = messageInput.value.trim();
+
+        if (message) {
+          socket.emit("chat message", { category: "general", message });
+          messageInput.value = "";
+        }
+      });
+
+    // Listen for new chat messages
+    socket.on("chat message", function (msg) {
+      const item = document.createElement("div");
+      item.classList.add(
+        "discussion-item",
+        "p-2",
+        "d-flex",
+        "align-items-center"
+      );
+
+      item.innerHTML = `
+        <img
+          src="https://via.placeholder.com/40"
+          alt="User Avatar"
+          class="rounded-circle me-2"
+        />
+        <div class="discussion-content">
+          <p class="mb-0">
+            <span class="username text-primary">${msg.username}</span>
+            <span class="timestamp text-muted ms-2">${new Date(
+              msg.createdAt
+            ).toLocaleTimeString()}</span>
+          </p>
+          <p class="comment-text mb-1">${msg.message}</p>
+          <div class="discussion-interactions">
+            <button class="text-muted like-btn" data-id="${msg._id}">Like (${
+        msg.likes || 0
+      })</button>
+            <button class="text-muted dislike-btn" data-id="${
+              msg._id
+            }">Dislike (${msg.dislikes || 0})</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("messages").appendChild(item);
+      scrollToBottom(); // Scroll to the bottom after adding a new message
+    });
+
+    // Handle like/dislike button clicks
+    document
+      .getElementById("messages")
+      .addEventListener("click", function (event) {
+        const messageId = event.target.getAttribute("data-id");
+
+        if (event.target.classList.contains("like-btn")) {
+          socket.emit("like message", messageId);
+        } else if (event.target.classList.contains("dislike-btn")) {
+          socket.emit("dislike message", messageId);
+        }
+      });
+
+    // Update likes and dislikes in real-time
+    socket.on("update likes", function (updatedMessage) {
+      const likeBtn = document.querySelector(
+        `.like-btn[data-id='${updatedMessage._id}']`
+      );
+      const dislikeBtn = document.querySelector(
+        `.dislike-btn[data-id='${updatedMessage._id}']`
+      );
+
+      if (likeBtn) {
+        likeBtn.textContent = `Like (${updatedMessage.likes || 0})`;
+      }
+      if (dislikeBtn) {
+        dislikeBtn.textContent = `Dislike (${updatedMessage.dislikes || 0})`;
+      }
+    });
+
+    // Load initial messages
+    socket.on("load messages", function (messages) {
+      const messagesList = document.getElementById("messages");
+      messages.forEach((msg) => {
+        const item = document.createElement("div");
+        item.classList.add(
+          "discussion-item",
+          "p-2",
+          "d-flex",
+          "align-items-center"
+        );
+
+        item.innerHTML = `
+          <img
+            src="https://via.placeholder.com/40"
+            alt="User Avatar"
+            class="rounded-circle me-2"
+          />
+          <div class="discussion-content">
+            <p class="mb-0">
+              <span class="username text-primary">${msg.username}</span>
+              <span class="timestamp text-muted ms-2">${new Date(
+                msg.createdAt
+              ).toLocaleTimeString()}</span>
+            </p>
+            <p class="comment-text mb-1">${msg.message}</p>
+            <div class="discussion-interactions">
+              <button class="text-muted like-btn" data-id="${msg._id}">Like (${
+          msg.likes || 0
+        })</button>
+              <button class="text-muted dislike-btn" data-id="${
+                msg._id
+              }">Dislike (${msg.dislikes || 0})</button>
+            </div>
+          </div>
+        `;
+
+        messagesList.appendChild(item);
+      });
+      scrollToBottom(); // Scroll to the bottom after loading messages
+    });
+
+    // Handle notifications
+    socket.on("user notification", function (notification) {
+      const item = document.createElement("div");
+      item.classList.add("notification", "p-2", "text-muted");
+      item.textContent = notification;
+      document.getElementById("messages").appendChild(item);
+      scrollToBottom(); // Scroll to the bottom after adding a notification
+    });
+
+    // Handle socket errors
+    socket.on("error", function (error) {
+      console.error("Error:", error.message);
+    });
+  </script>
+</body>

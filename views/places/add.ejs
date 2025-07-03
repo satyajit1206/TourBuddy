@@ -1,0 +1,82 @@
+<% layout('./layouts/boilerplate') -%>
+<body>
+  <div class="login-cont">
+    <div class="login-img">
+      
+    </div>
+    <div class="form-style" style="margin: 2px">
+      <h1 style="text-align: center">Add a New Place</h1>
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-6">
+          <form
+            method="POST"
+            action="/places/add"
+            novalidate
+            class="needs-validation"
+            enctype="multipart/form-data"
+          >
+            <div class="mb-3">
+              <label for="title" class="form-label">Title:</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Add a title.."
+                class="form-control"
+                required
+              />
+              <div class="invalid-feedback">Please enter a valid title.</div>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description:</label>
+              <textarea
+                name="description"
+                id="description"
+                class="form-control"
+                placeholder="Description.."
+                required
+              ></textarea>
+              <div class="invalid-feedback">
+                Please write a short description.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="newImages" class="form-label">Upload Image(s):</label>
+              <input
+                type="file"
+                name="newImages"
+                id="newImages"
+                class="form-control"
+                multiple
+                required
+              />
+              <div class="invalid-feedback">Please upload at least one image.</div>
+            </div>
+            <div class="mb-3">
+              <label for="location" class="form-label">Location:</label>
+              <input
+                type="text"
+                name="location"
+                id="location"
+                class="form-control"
+                placeholder="Delhi, India"
+                required
+              />
+              <div class="invalid-feedback">Please choose a location.</div>
+            </div>
+            <div class="d-flex justify-content-center">
+              <button
+                type="submit"
+                class="btn btn-primary fw-bold"
+                style="background-color: #74C0FC; border: none"
+              >
+                List Place
+              </button>
+            </div>
+          </form>
+          <br>  
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

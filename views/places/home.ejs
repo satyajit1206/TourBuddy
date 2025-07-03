@@ -1,0 +1,105 @@
+<% layout('./layouts/boilerplate') -%>
+<body>
+  <div class="row">
+    <div class="col-sm-6 offset-sm-4 fw-bold " style="margin-top: 90px;">
+      <div
+        id="startText"
+        class="startingText text-body-secondary"
+        style="
+          font-size: 5vh;
+          background: -webkit-linear-gradient(
+            rgb(188, 12, 241),
+            rgb(212, 4, 4)
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        "
+      >
+        Welcome
+      </div>
+      <div class="startingText mx-1" style="font-size: 5vh">
+        <span class="z-3">to <b>TourBuddy</b></span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-home">
+    <div class="hero-content">
+      <div class="hero-img">
+        <img src="snow_mountain.jpg" alt="">
+      </div>
+      <div>
+        <h1>Travel around the world</h1>
+        <p>with the people you want to be with.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-home2">
+    <div class="hero-content2">
+      <div>
+        <h1>Connect to people </h1>
+        <p>participate in communitie's and travel together.</p>
+        <div>
+          <a class="nav-link2" id="comtribute-btn" href="/places/add">Contribute</a>
+          <a class="nav-link2" id="explore-btn" href="/places">Explore</a>
+        </div>
+      </div>
+      <div class="hero-img2">
+        <img src="snow_mountain.jpg" alt="">
+      </div>
+    </div>
+  </div>
+  
+  <div>
+    <% if(places.length > 0) { %>
+      <div class="home-list">
+        <!-- Glassmorphism container -->
+        <div class="glas-cont">
+          <h1 class="glas-text">Places on</h1>
+          <h1 class="glas-text mx-1">
+             <span class="z-3"><b style="color: rgb(97, 209, 209);">TourBuddy</b></span>
+          </h1>
+        </div>
+        
+        <div class="glass-container-list">
+          <div class="all-listings">
+            <% for(let place of places) { %>
+              <a href="/places/<%= place._id %>">
+                <div class="card listing-card" style="width: 18rem">
+                  <img
+                    src="<%= place.images[0].url %>"
+                    class="card-img-top"
+                    alt="..."
+                    height="300px"
+                    width="200px"
+                  />
+                  <div class="card-img-overlay"></div>
+                  <div class="card-body">
+                    <p class="card-text">
+                      <b><%= place.title %></b>
+                      <br />
+                      <%= place.location %>
+                    </p>
+                  </div>
+                </div>
+              </a>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    <% } else { %>
+      <div>
+        <h1 style="text-align: center; margin-top: 10vh ">
+          Oops! No place found!! <span>&#129402;</span>
+        </h1>
+        <div class="bg-blue-500 text-white p-4">
+          This should be a blue background with white text.
+        </div>
+        <div class="not-found">
+          <h1>No places listed yet</h1>
+          <a class="nav-link" id="contr-btn" href="/places/add">Contribute</a>
+      </div>
+      </div>
+    <% } %>
+  </div>
+</body>

@@ -1,0 +1,114 @@
+<% layout('./layouts/boilerplate') -%>
+<body>
+  <div class="row d-flex justify-content-center">
+    <div class="col-sm-6">
+      <h1 style="text-align: center">Update Details</h1>
+      <br />
+      <form
+        method="POST"
+        action="/places/<%= place._id %>?_method=PATCH"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
+        <!-- Title -->
+        <div>
+          <label for="title" class="form-label">Title:</label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            value="<%= place.title %>"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid title.</div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="description" class="form-label">Description:</label>
+          <textarea
+            name="description"
+            id="description"
+            rows="3"
+            class="form-control"
+            required
+          >
+<%= place.description %></textarea
+          >
+          <div class="invalid-feedback">Please write a short description.</div>
+        </div>
+
+        <!-- Existing Images -->
+        <div>
+          <label for="existingImages" class="form-label"
+            >Existing Images:</label
+          >
+          <div class="thumbnail-container">
+            <% place.images.forEach((image, index) => { %>
+            <div class="col-md-3">
+              <img src="<%= image.url %>" alt="Place Image" />
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="removeImages[]"
+                  value="<%= image.imageId %>"
+                  id="removeImage<%= index %>"
+                />
+                <label class="form-check-label" for="removeImage<%= index %>">
+                  Remove
+                </label>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+          <div class="form-text">Check the images you want to remove.</div>
+        </div>
+
+        <!-- Upload New Images -->
+        <div>
+          <label for="newImages" class="form-label">Upload New Images:</label>
+          <input
+            type="file"
+            name="newImages"
+            id="newImages"
+            class="form-control"
+            multiple
+          />
+          <div class="form-text">
+            Upload new images to add to the existing ones.
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div>
+          <label for="location" class="form-label">Location:</label>
+          <input
+            type="text"
+            name="location"
+            id="location"
+            class="form-control"
+            required
+            value="<%= place.location %>"
+          />
+          <div class="invalid-feedback">Please choose a location.</div>
+        </div>
+
+        <br />
+        <!-- Submit Button -->
+        <div style="display: flex; justify-content: center">
+          <button
+            type="submit"
+            class="btn btn-primary fw-bold"
+            style="background-color: #74c0fc; border: none"
+          >
+            Update Details
+          </button>
+        </div>
+        <br />
+      </form>
+    </div>
+  </div>
+</body>

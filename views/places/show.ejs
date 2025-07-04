@@ -1,0 +1,360 @@
+<% layout('./layouts/boilerplate') -%>
+<script>
+  const mapToken = "<%= process.env.MAP_TOKEN %>";
+  const coordinates = <%- JSON.stringify(place.geometry.coordinates) %>;
+  const locationWeather = "<%= place.location %>";
+  const weatherApiKey = "<%= process.env.WEATHER_API_KEY %>";
+</script>
+<body>
+  <!-- Big Background Box -->
+  <div class="background-box">
+    <div class="show-cont">
+      <div class="row">
+        <!-- Image Carousel on the Left Side -->
+        <div class="col-md-6">
+          <div
+            id="imageCarousel"
+            class="carousel slide mt-2"
+            data-bs-ride="carousel"
+          >
+            <div class="carousel-inner">
+              <% if (transformedImageUrls.length > 0) { %> <%
+              transformedImageUrls.forEach((imageUrl, index) => { %>
+              <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                <img
+                  src="<%= imageUrl %>"
+                  class="d-block w-100"
+                  alt="Listing Image"
+                />
+              </div>
+              <% }) %> <% } else { %>
+              <div class="carousel-item active">
+                <img
+                  src="/path/to/default-image.jpg"
+                  class="d-block w-100"
+                  alt="Default Image"
+                />
+              </div>
+              <% } %>
+            </div>
+
+            <!-- Previous and Next buttons only if there are multiple images -->
+            <% if (transformedImageUrls.length > 1) { %>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#imageCarousel"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#imageCarousel"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+            <% } %>
+
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+              <% transformedImageUrls.forEach((_, index) => { %>
+              <button
+                type="button"
+                data-bs-target="#imageCarousel"
+                data-bs-slide-to="<%= index %>"
+                class="<%= index === 0 ? 'active' : '' %>"
+                aria-current="<%= index === 0 ? 'true' : 'false' %>"
+                aria-label="Slide <%= index + 1 %>"
+              ></button>
+              <% }) %>
+            </div>
+          </div>
+
+          <!-- UPDATE and DELETE Buttons -->
+          <% if (currentUser && currentUser._id.equals(place.addedBy._id)) { %>
+          <div
+            id="glass-container-update"
+            style="
+              display: flex;
+              justify-content: center;
+              gap: 100px;
+              margin-top: 70px;
+            "
+          >
+            <form method="GET" action="/places/<%= place._id %>/edit">
+              <button type="submit" class="btn fw-bold update-button">
+                UPDATE
+              </button>
+            </form>
+
+            <form
+              method="POST"
+              action="/places/<%= place._id %>?_method=DELETE"
+              onsubmit="return confirmDelete()"
+            >
+              <button
+                type="submit"
+                class="btn btn-primary fw-bold delete-button"
+              >
+                DELETE
+              </button>
+            </form>
+          </div>
+          <% } %>
+        </div>
+
+        <!-- Details on the Right Side -->
+        <div class="col-md-6">
+          <!-- Place Details -->
+          <div class="p-4 mb-4 details-box">
+            <div>
+              <h3><b><%= place.title %></b></h3>
+              <hr />
+              <p><%= place.description %></p>
+              <p>
+                Read more on
+                <a href="https://en.wikipedia.org/wiki/<%= place.title %>"
+                  >wiki</a
+                >
+                or generate using <b>AI</b>
+                <button
+                  class="btn btn-primary ask-ai"
+                  style="
+                    border: none;
+                    background-color: transparent;
+                    color: #0b0b0b;
+                    text-decoration: underline;
+                    padding-bottom: 7px;
+                    font-size: larger;
+                  "
+                  data-title="<%= place.title %>"
+                  data-location="<%= place.location %>"
+                >
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </p>
+              <p><b>Added by: <%= place.addedBy.username %></b></p>
+            </div>
+          </div>
+
+          <!-- Weather Details -->
+          <div class="p-4 weather-box">
+            <div class="weather-info">
+              <h2 id="locationWeather"></h2>
+              <hr />
+              <p id="temperatureWeather">
+                <i class="fas fa-thermometer-half"></i> <span>Temp:</span>
+              </p>
+              <p id="descriptionWeather">
+                <i class="fas fa-cloud-sun"></i> <span>Description:</span>
+              </p>
+              <p id="windSpeedWeather">
+                <i class="fas fa-wind"></i> <span>Wind Speed:</span>
+              </p>
+              <p id="humidityWeather">
+                <i class="fas fa-tint"></i> <span>Humidity:</span>
+              </p>
+              <p id="pressureWeather">
+                <i class="fas fa-tachometer-alt"></i> <span>Pressure:</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8 offset-md-1">
+          <!-- AI Response Section -->
+          <div id="ai-response-container" class="mt-4" style="display: none">
+            <div class="loading-spinner" style="display: none">
+              <i class="fas fa-spinner fa-spin"></i> Generating details...
+            </div>
+            <div id="ai-response" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <hr />
+
+  <!-- Glassmorphism Main Container -->
+  <div class="glass-container">
+    <!-- Map Section with its own Glassmorphism Box -->
+    <div class="glass-box">
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="row w-100">
+          <!-- Map Section on the Left Side -->
+          <div class="col-md-6">
+            <h3><b>Find <%= place.title %> here..</b></h3>
+            <div id="map" style="width: 100%; height: 300px"></div>
+            <div class="row mt-3">
+              <div class="col-12">
+                <div id="menu" class="d-flex justify-content-around">
+                  <input
+                    id="satellite-streets-v12"
+                    type="radio"
+                    name="rtoggle"
+                    value="satellite"
+                  />
+                  <label for="satellite-streets-v12">satellite streets</label> |
+                  <input
+                    id="light-v11"
+                    type="radio"
+                    name="rtoggle"
+                    value="light"
+                  />
+                  <label for="light-v11">light</label> |
+                  <input
+                    id="dark-v11"
+                    type="radio"
+                    name="rtoggle"
+                    value="dark"
+                  />
+                  <label for="dark-v11">dark</label> |
+                  <input
+                    id="streets-v12"
+                    type="radio"
+                    name="rtoggle"
+                    value="streets"
+                  />
+                  <label for="streets-v12">streets</label> |
+                  <input
+                    id="outdoors-v12"
+                    type="radio"
+                    name="rtoggle"
+                    value="outdoors"
+                  />
+                  <label for="outdoors-v12">outdoors</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Section on the Right Side -->
+          <div
+            class="col-md-6 d-flex align-items-center justify-content-center map-img"
+          >
+            <!-- Content for the image section if needed -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <% if (currentUser) { %>
+    <!-- Review Section with its own Glassmorphism Box -->
+    <div class="glass-box">
+      <div class="d-flex flex-column">
+        <h3>Your view on <%= place.title %></h3>
+        <form
+          method="POST"
+          action="/places/<%= place._id %>/reviews/add"
+          novalidate
+          class="needs-validation"
+        >
+          <div class="mb-1">
+            <label for="rating" class="form-label"
+              >Rate <%= place.title %>:</label
+            >
+            <fieldset class="starability-heartbeat">
+              <input
+                type="radio"
+                id="no-rate"
+                class="input-no-rate"
+                name="rating"
+                value="1"
+                checked
+                aria-label="No rating."
+              />
+              <input type="radio" id="first-rate1" name="rating" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="rating" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="rating" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="rating" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="rating" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
+          </div>
+          <div class="mb-3">
+            <label for="review" class="form-label">Your Review:</label>
+            <textarea
+              id="reviewText"
+              name="review"
+              class="form-control"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn fw-bold add-review-button" style="margin-left: 480px;">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Display Reviews Section -->
+    <% if (place.reviews.length > 0) { %>
+    <div class=" mb-3">
+      <p><b>All comments:</b></p>
+      <div class="row">
+        <% for (let review of place.reviews) { %>
+        <div class="card col-md-4 mb-3 me-2 mx-4">
+          <div class="card-body">
+            <b>~<%= review.createdBy.username %></b>
+            <h5 class="card-title d-flex justify-content-between">
+              <p class="starability-result" data-rating="<%= review.rating %>">
+                Rated: 3 stars
+              </p>
+              <small
+                ><%= review.createdAt.toDateString().split(" ").join(", ")
+                %></small
+              >
+            </h5>
+            <div class="d-flex justify-content-between">
+              <div class="card-text me-2"><%= review.review %></div>
+              <% if (currentUser &&
+              currentUser._id.equals(review.createdBy._id)) { %>
+              <form
+                method="POST"
+                action="/places/<%= place._id %>/reviews/<%= review._id %>?_method=DELETE"
+              >
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-dark align-self-bottom"
+                >
+                  DELETE
+                </button>
+              </form>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    <% } else { %>
+    <p>No reviews yet. Be the first to review <%= place.title %>!</p>
+    <% } %>
+  </div>
+
+  <script src="/script/weather.js"></script>
+  <script src="/script/map.js"></script>
+  <script src="/script/ai.js"></script>
+</body>

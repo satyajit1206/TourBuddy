@@ -1,0 +1,936 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Lato" !important;
+  overflow-x: hidden;
+}
+
+.container {
+  flex: 1;
+}
+
+/* Navbar  */
+.navbar {
+  height: 4rem;
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.23);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  position: fixed; /* Change to fixed */
+  top: 0; /* Stick to the top */
+  left: 0; /* Align to the left */
+  right: 0; /* Align to the right */
+  margin-bottom: 30px; /* Optional: adjust as needed */
+  width: 100%; /* Ensure the navbar spans the full width */
+}
+
+
+.navbar-brand i {
+  font-size: 2rem;
+  color: #74c0fc;
+  rotate: -30deg;
+}
+
+.nav-link {
+  color: #222222 ;
+  font-weight: 500 !important;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+.nav-link:hover {
+  background-color: #62a0e3;
+  color: #fff;  
+}
+
+/* hero home two btns */
+
+.nav-link2 {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  text-decoration: none;
+  margin-right: 5px;
+  color: #000;
+}
+
+.nav-link2:hover {
+  background-color: #62a0e3;
+  color: #fff;  
+}
+
+#explore-btn{
+  border: 1px solid black;
+}
+
+.search-box {
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+}
+.input-search {
+  height: 50px;
+  width: 50px;
+  border-style: none;
+  padding: 10px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  outline: none;
+  border-radius: 25px;
+  transition: all 0.5s ease-in-out;
+  /* background-color: #74C0FC; */
+  padding-right: 40px;
+  color: black;
+  margin-right: 20px;
+}
+.input-search::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-weight: 100;
+}
+.btn-search {
+  width: 50px;
+  height: 50px;
+  border-style: none;
+  font-size: 20px;
+  font-weight: bold;
+  outline: none;
+  cursor: pointer;
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  color: black;
+  background-color: transparent;
+  pointer-events: painted;
+  transform: translateX(-40%);
+}
+.btn-search:focus ~ .input-search {
+  width: 300px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+}
+.input-search:focus {
+  width: 300px;
+  border-radius: 0px;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(32, 26, 26, 0.5);
+  transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+}
+
+.input-search {
+  pointer-events: none;
+}
+
+.input-search.open {
+  pointer-events: auto;
+}
+
+.search-box {
+  position: relative;
+  width: fit-content;
+}
+
+/* Footer  */
+
+footer {
+  background-color: #183153;
+  color: white;
+  padding: 0.3rem 0;
+  text-align: center;
+}
+
+.f-info-links a {
+  color: white;
+  font-size: 0.9rem;
+  margin: 0rem;
+  text-decoration: none;
+}
+
+.f-info-links a:hover {
+  color: #74c0fc;
+  text-decoration: underline;
+}
+
+.f-info-socials i {
+  font-size: 1.3rem;
+  color: white;
+  margin: 0.5rem;
+}
+
+.f-info-socials i:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.f-company-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* hero section css */
+.hero-home {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+  position: relative;
+  background: rgba(255, 255, 255, 0.23);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+  margin-top: 30px;
+  background-image: url('../assets/blur_snow_mountain.webp');
+  background-size: cover;
+  background-position: center;
+  animation: revealImg 6s;
+}
+
+.hero-img {
+  width: 50%;
+  height: 80%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(20px);
+  background-image: url('../assets/snow_mountain.jpg');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  margin-right: 2rem;
+  animation: slideInRight 2s ease-out forwards; /* Apply animation */
+}
+
+.hero-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #000;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16px 16px 16px 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: slideInLeft 2s ease-out forwards; /* Apply animation */
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes revealImg {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+/* for second hero-home img */
+
+.hero-home2 {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+  position: relative;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
+  margin-top: 30px;
+
+}
+
+.hero-img2 {
+  width: 60%;
+  height: 80%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(20px);
+  background-image: url('../assets/people-collaborating-online.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  margin-left: 2rem;
+}
+
+.hero-content2 {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16px 16px 16px 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+
+
+
+
+
+
+/* All Listings  */
+
+.all-listings {
+  display: flex;
+  flex-wrap: wrap;
+  /* align-items: center; */
+  justify-content: center;
+  /* margin: 1rem 1rem; */
+  /* background-color: black; */
+}
+
+.listing-card {
+  margin: 1rem;
+  width: 18rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.all-listings a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Card Effect */
+
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card:hover .card-img-overlay {
+  opacity: 0.4;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
+}
+
+/* Show Page  */
+
+
+/* Ensures the image fills the carousel item while maintaining aspect ratio */
+/* Image carousel styles */
+/* Glassmorphism background container */
+/* Glassmorphism background container */
+/* Image carousel styles */
+/* Big Background Box with Glassmorphism Effect */
+.background-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  margin-top: 80px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* update and delete buttons glass effect */
+
+#glass-container-update{
+  padding: 20px;
+  margin: 10px;
+}
+
+/* Details Box Styling */
+.details-box, .weather-box {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Adjust margins for better spacing */
+.details-box {
+  margin-bottom: 20px;
+}
+
+/* Carousel Image Styling */
+.carousel-inner img {
+  object-fit: cover;
+  height: 60vh; /* Adjust based on your design needs */
+  border-radius: 20px;
+  width: 100%; /* Ensures image spans full width of carousel item */
+}
+
+/* Restricts carousel height to ensure it fits well within the viewport */
+.carousel {
+  max-height: 60vh; /* Consistent with image height for layout */
+}
+
+/* Styles for carousel control icons */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for visibility */
+  border-radius: 50%;
+  padding: 10px;
+}
+
+/* Styles for carousel indicators */
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px; /* Moves indicators to bottom of carousel */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+/* Update button color change and size increase on hover */
+.update-button {
+  color: #000;
+  border: 1px solid black ;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.update-button:hover {
+  color: #fff;
+  border: none;
+  background-color: #28a745; /* Green color on hover */
+  transform: scale(1.1); /* Increase button size */
+}
+
+.delete-button {
+  background-color: #000;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.delete-button:hover {
+  background-color: #d41730; /* Green color on hover */
+  transform: scale(1.1); /* Increase button size */
+}
+
+
+
+/* show page css */
+
+
+
+
+/* All Listings  */
+
+.all-listings {
+  display: flex;
+  flex-wrap: wrap;
+  /* align-items: center; */
+  justify-content: center;
+  /* margin: 1rem 1rem; */
+  /* background-color: black; */
+}
+
+.listing-card {
+  margin: 1rem;
+  width: 18rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+  border-radius: 10px 10px 0 0; /* Rounds only the top corners of the image */
+}
+
+.all-listings a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Card Effect */
+
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card:hover .card-img-overlay {
+  opacity: 0.4;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
+}
+
+/* page not-found css */
+
+.not-found{
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#contr-btn{
+  border: 2px solid black;
+  font-size: 1.50rem;
+  margin-left: 10px;
+}
+
+#contr-btn:hover{
+  border: none;
+}
+
+/* add page stylels */
+/* Define the animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.login-cont {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-img {
+  width: 45%; /* Adjust to take half the width */
+  height: 77vh; /* Full viewport height */
+  background-image: url('../assets/login_image.webp');
+  background-size: cover; /* Ensure the image covers the entire area */
+  background-position: center; /* Center the image */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 16px 0 0 16px; /* Rounded corners on the left */
+  animation: slideInLeft 1s ease-out; /* Apply the animation */
+}
+
+.form-style {
+  width: 50%; /* Adjust to take the other half */
+  height: 77vh;
+  background: rgba(255, 255, 255, 0.15); /* Increased transparency */
+  backdrop-filter: blur(15px); /* Stronger blur for the glass effect */
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 0 16px 16px 0; /* Rounded corners on the right */
+  padding: 1rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Light border for the frosted effect */
+  animation: slideInRight 1s ease-out; /* Apply the animation */
+}
+
+
+/* home-glass-container css */
+.glass-container-list {
+  backdrop-filter: blur(15px); /* Blur for glass effect */
+  -webkit-backdrop-filter: blur(15px); /* For WebKit browsers */
+  border-radius: 16px; /* Rounded corners */
+  padding: 1rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin: 2rem 0; /* Spacing around the container */
+  overflow: hidden; /* Ensure the container wraps the content */
+  background-size: cover; /* Cover the container */
+  background-position: center; /* Center the image */
+}
+
+
+.all-listings {
+  display: flex;
+  flex-wrap: wrap; /* Ensure the cards wrap to the next line */
+  gap: 1rem; /* Spacing between cards */
+}
+
+.listing-card {
+  background: rgba(255, 255, 255, 0.1); /* Slight transparency on the card */
+  backdrop-filter: blur(10px); /* Apply blur to cards */
+  -webkit-backdrop-filter: blur(10px); /* For WebKit browsers */
+  border-radius: 8px; /* Rounded corners on cards */
+  overflow: hidden; /* Ensure no overflow */
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow on cards */
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Example usage of animation */
+.element-to-animate {
+  animation: slideInFromLeft 0.5s ease-out;
+}
+
+
+
+
+/* edit page  */
+
+/* Ensures all thumbnails have the same height and width */
+.thumbnail-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Optional: space between thumbnails */
+}
+
+.thumbnail-container img {
+  width: 100%;
+  height: 150px; /* Set a fixed height */
+  object-fit: cover; /* Ensures images fit within the box without distortion */
+  border-radius: 0.25rem; /* Bootstrap's border radius for consistent styling */
+}
+
+/* Optional: Adjust form-check styling to align with Bootstrap */
+.form-check {
+  margin-top: 5px; /* Space between image and checkbox */
+}
+
+.form-check-input {
+  margin-top: 3px; /* Adjust checkbox positioning */
+}
+
+/* map and review boxes */
+.glass-container {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 20px 0;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Individual Glass Boxes for Map and Review Sections */
+.glass-box {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 20px;
+}
+
+/* Additional Spacing and Styling */
+.glass-box .row {
+  margin-bottom: 15px;
+}
+
+.add-review-button{
+  &:hover{
+    background-color: #74c0fc;
+    color: #f7f7f7;
+  }
+}
+
+
+/* map  */
+
+#map {
+  height: 70vh;
+  width: 100vh;
+  margin: 1rem auto;
+}
+
+.map-img{
+  background-image: url('../assets/mobile-map-and-navigation.png');
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+}
+
+/* make #map responsive */
+@media (max-width: 768px) {
+  #map {
+    height: 50vh;
+    width: 50vh;
+  }
+}
+
+#menu {
+  /* background-color: #fe424d; */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#menu label {
+  color: #555555c3;
+}
+
+/* Weather  */
+
+.weatherDetails {
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.weather-info h2,
+.weather-info p {
+  font-family: "Arial", sans-serif;
+  color: #183153;
+  /* margin: 10px 0; */
+  animation: fadeInUp 0.5s ease-in-out forwards;
+  display: flex;
+  align-items: center;
+}
+
+.weather-info i {
+  margin-right: 10px;
+  color: #007bff;
+  font-size: 1.5em;
+}
+
+.weather-info span {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.weatherDetails.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Starting Text  */
+
+.startingText {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.startingText:first-of-type {
+  animation: showup 7s infinite;
+}
+
+.startingText:last-of-type {
+  width: 0px;
+  animation: reveal 7s infinite;
+}
+
+.startingText:last-of-type span {
+  margin-left: -355px;
+  animation: slidein 7s infinite;
+}
+
+@keyframes showup {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slidein {
+  0% {
+    margin-left: -800px;
+  }
+  20% {
+    margin-left: -800px;
+  }
+  35% {
+    margin-left: 0px;
+  }
+  100% {
+    margin-left: 0px;
+  }
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    width: 0px;
+  }
+  20% {
+    opacity: 1;
+    width: 0px;
+  }
+  30% {
+    width: 355px;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    width: 355px;
+  }
+}
+
+
+/* glas-text */
+.glas-cont {
+  display: flex;
+  align-items: center;
+  margin-left: 400px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.glas-text {
+  text-align: center;
+  overflow: hidden;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+.glas-text:first-of-type {
+  animation: showupglas 7s infinite;
+}
+
+.glas-text:last-of-type {
+  width: 0px;
+  animation: revealglas 7s infinite;
+}
+
+.glas-text:last-of-type span {
+  margin-left: -355px;
+  animation: slideinglas 7s infinite;
+}
+
+@keyframes showupglas {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideinglas {
+  0% {
+    margin-left: -800px;
+  }
+  20% {
+    margin-left: -800px;
+  }
+  35% {
+    margin-left: -150px;
+  }
+  100% {
+    margin-left: -150px;
+  }
+}
+
+@keyframes revealglas {
+  0% {
+    opacity: 0;
+    width: 0px;
+  }
+  20% {
+    opacity: 1;
+    width: 0px;
+  }
+  30% {
+    width: 355px;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    width: 355px;
+  }
+}
+
+/* Ai  */
+
+.ask-ai i{
+  font-size: 2rem;
+  color: #74c0fc;
+
+  &:hover{
+    color: #007bff;
+  }
+}
+

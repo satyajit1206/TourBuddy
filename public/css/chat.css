@@ -1,0 +1,57 @@
+.container {
+  overflow-y: scroll; /* Enable scrolling */
+  -webkit-overflow-scrolling: touch; /* Optional: Makes scrolling smooth on touch devices */
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Hides scrollbar */
+}
+
+h1 {
+  font-size: 2.5rem; /* Adjust as needed */
+  font-weight: 700; /* Ensure the text is bold */
+  color: #333; /* Adjust color as needed */
+  text-align: center;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.like-btn,
+.dislike-btn {
+  border: none;
+  background: none;
+  cursor: pointer; /* Cursor pointer on hover */
+}
+
+.chat-body {
+  max-height: 400px; /* Set appropriate maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  -webkit-overflow-scrolling: touch; /* Optional: Smooth scrolling on touch devices */
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+.chat-body::-webkit-scrollbar {
+  display: none; /* Hides scrollbar */
+}
+
+#message-input {
+  border: none;
+  border: 1px solid #000; /* Border for the input field */
+  box-shadow: none;
+}
+
+#message-input:focus {
+  outline: none; /* Remove default outline on focus */
+}

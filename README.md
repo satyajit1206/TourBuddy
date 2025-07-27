@@ -2,6 +2,8 @@
 
 **TourBuddy** is a comprehensive web platform that facilitates group travel by connecting travelers, sharing experiences, and enabling collaborative trip planning. Users can list and review destinations they've visited, helping others make informed travel decisions.
 
+Live Link - https://tourbuddy-d6zy.onrender.com/
+
 ---
 
 ## 🌟 Features
